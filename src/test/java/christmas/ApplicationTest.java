@@ -48,6 +48,34 @@ class ApplicationTest extends NsTest {
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         });
     }
+    
+    //===================추가 테스트 구현
+    
+    @Test
+    void 주문메뉴_출력() {
+        assertSimpleTest(() -> {
+            run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains(
+                "<주문 메뉴>",
+                "티본스테이크 1개",
+                "바비큐립 1개",
+                "초코케이크 2개",
+                "제로콜라 1개"
+            );
+        });
+    }
+    @Test
+    void 할인전금액_출력() {
+        assertSimpleTest(() -> {
+            run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains(
+                "<할인 전 총주문 금액>",
+                "142,000원"
+            );
+        });
+    }
+    
+    
 
     @Override
     protected void runMain() {
