@@ -1,5 +1,7 @@
 package view;
 
+import java.text.DecimalFormat;
+
 import domain.Customer;
 import domain.MenuItem;
 
@@ -26,6 +28,19 @@ public class OutputView {
         for (MenuItem menuItem : customer.getMenuItems()) {
             System.out.println(menuItem.getMenu() + " " + menuItem.getQuantity() + "개");
         }
+ 
     }
+
+
+	public static void printBeforeDiscountPrice(Customer customer) {
+	    System.out.println("<할인 전 총주문 금액>");
+		int price = customer.calculateTotalPrice();
+		
+		DecimalFormat df = new DecimalFormat("###,###");
+		
+		System.out.println(df.format(price)+"원");
+		
+		
+	}
 
 }
