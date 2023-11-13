@@ -12,7 +12,6 @@ public class ChristmasDdayDiscountEvent implements Event {
         this.events = events;
     }
 	
-	@Override
 	public void applyEvent(Customer customer) {
 		int date = customer.getVisitDate();
 		if(date >= 1 && date<=25) {
