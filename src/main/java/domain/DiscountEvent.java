@@ -1,15 +1,6 @@
 package domain;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import event.ChristmasDdayDiscountEvent;
-import event.GiftEvent;
-import event.WeekdayDiscountEvent;
-import event.WeekendDiscountEvent;
 
 public class DiscountEvent {
 

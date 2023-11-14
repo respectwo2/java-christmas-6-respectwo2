@@ -4,13 +4,17 @@ import java.util.List;
 
 public class Customer {
 
+	private static final int MIN_THIRD_BADGE = 5000;
+	private static final int MIN_SECOND_BADGE = 10000;
+	private static final int MIN_FIRST_BADGE = 20000;
+
 	private int visitDate;
 	private List<MenuItem> menuItems;
 	private List<DiscountEvent> events;
 
-	public Customer(int date, List<MenuItem> menus, List<DiscountEvent> events) {
+	public Customer(int date, List<MenuItem> menuItems, List<DiscountEvent> events) {
 		this.visitDate = date;
-		this.menuItems = menus;
+		this.menuItems = menuItems;
 		this.events = events;
 	}
 
@@ -36,20 +40,20 @@ public class Customer {
 		}
 		return total;
 	}
-	
-    public String getBadge() {
-        int totalDiscount = DiscountEvent.calculateTotalDiscount(this);
-        
-        if (totalDiscount >= 20000) {
-            return "산타";
-        }
-        if (totalDiscount >= 10000) {
-            return "트리";
-        }
-        if (totalDiscount >= 5000) {
-            return "별";
-        }
-        return null; 
-    }
+
+	public String getBadge() {
+		int totalDiscount = DiscountEvent.calculateTotalDiscount(this);
+
+		if (totalDiscount >= MIN_FIRST_BADGE) {
+			return "산타";
+		}
+		if (totalDiscount >= MIN_SECOND_BADGE) {
+			return "트리";
+		}
+		if (totalDiscount >= MIN_THIRD_BADGE) {
+			return "별";
+		}
+		return null;
+	}
 
 }

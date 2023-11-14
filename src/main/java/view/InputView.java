@@ -35,7 +35,7 @@ public class InputView {
 			try {
 				OutputView.printMenuItemInputText();
 				List<MenuItem> menuItems = readMenuItems();
-                return menuItems;
+				return menuItems;
 			} catch (IllegalArgumentException e) {
 				OutputView.printErrorMessage(e.getMessage());
 			}
@@ -43,21 +43,21 @@ public class InputView {
 	}
 
 	private List<MenuItem> readMenuItems() {
-	    String input = Console.readLine();
-	    String[] menuAndQuantity = input.split(",");
-	    validateMenuAndQuantity(menuAndQuantity);
-	    List<MenuItem> menuItems = createMenuItems(menuAndQuantity);
+		String input = Console.readLine();
+		String[] menuAndQuantity = input.split(",");
+		validateMenuAndQuantity(menuAndQuantity);
+		List<MenuItem> menuItems = createMenuItems(menuAndQuantity);
 
-	    if (!validateBeverageOrder(menuItems)) {
-	        throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
-	    }
+		if (!validateBeverageOrder(menuItems)) {
+			throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
+		}
 
-	    return menuItems;
+		return menuItems;
 	}
 
 	private List<MenuItem> createMenuItems(String[] menuAndQuantity) {
 		List<MenuItem> menuItems = new ArrayList<>();
-		
+
 		for (String entry : menuAndQuantity) {
 			String[] split = entry.split("-");
 			validateMenuItem(split[0].trim());
@@ -68,59 +68,56 @@ public class InputView {
 		return menuItems;
 	}
 
-
 	private void validateMenuAndQuantity(String[] menuAndQuantity) {
-	    for (String entry : menuAndQuantity) {
-	        String[] split = entry.split("-");
-	        String menu = split[0].trim();
-	        validateMenuItem(menu);
+		for (String entry : menuAndQuantity) {
+			String[] split = entry.split("-");
+			String menu = split[0].trim();
+			validateMenuItem(menu);
 
-	        String quantityStr = split[1].trim();
-	        validateParseInt(quantityStr);
-	    }
+			String quantityStr = split[1].trim();
+			validateParseInt(quantityStr);
+		}
 	}
 
 	private void validateParseInt(String input) {
-	    if (!input.matches("\\d+")) {
-	        throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
-	    }
+		if (!input.matches("\\d+")) {
+			throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
+		}
 	}
 
 	private void validateDate(String input) {
-	    if (!input.matches("\\d+")) {
-	        throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE_DATE);
-	    }
-	    int date = Integer.parseInt(input);
-	    if (date < MIN_DATE || date > MAX_DATE) {
-	        throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE_DATE);
-	    }
+		if (!input.matches("\\d+")) {
+			throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE_DATE);
+		}
+		int date = Integer.parseInt(input);
+		if (date < MIN_DATE || date > MAX_DATE) {
+			throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE_DATE);
+		}
 	}
 
-    private void validateMenuItem(String input) {
-        for (MenuItemsList menuItem : MenuItemsList.values()) {
-            if (menuItem.getName().equalsIgnoreCase(input)) {
-                return;
-            }
-        }
-        throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
-    }
-    
+	private void validateMenuItem(String input) {
+		for (MenuItemsList menuItem : MenuItemsList.values()) {
+			if (menuItem.getName().equalsIgnoreCase(input)) {
+				return;
+			}
+		}
+		throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
+	}
 
-    private void validateQuantity(int quantity) {
-        if (quantity > MAX_ORDER_QUANTITY) {
-            throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
-        }
-    }
-    
-    
-    private boolean validateBeverageOrder(List<MenuItem> menuItems) {
-        for (MenuItem menuItem : menuItems) {
-            MenuItemsList menuItemsList = MenuItemsList.valueOf(menuItem.getMenu());
-            if (!menuItemsList.getType().equals("음료")) {
-                return true;
-            }
-        }
-        return false;
-    }
+	private void validateQuantity(int quantity) {
+		if (quantity > MAX_ORDER_QUANTITY) {
+			throw new IllegalArgumentException(ERROR_ILLEGALARGUMENT_MESSAGE);
+		}
+	}
+
+	private boolean validateBeverageOrder(List<MenuItem> menuItems) {
+		for (MenuItem menuItem : menuItems) {
+			MenuItemsList menuItemsList = MenuItemsList.valueOf(menuItem.getMenu());
+			if (!menuItemsList.getType().equals("음료")) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
