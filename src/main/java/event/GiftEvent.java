@@ -1,36 +1,26 @@
 package event;
 
 import domain.Customer;
-import domain.Events;
+import domain.DiscountEvent;
 
-public class GiftEvent implements Event {
+public class GiftEvent extends DiscountEvent {
 
+    private static final String GIFT_EVENT_NAME = "증정 이벤트";
     private static final int GIFT_NEED_PRICE = 120000;
     private static final int GIFT_DISCOUNT_PRICE = 25000;
-	private static final String GIFT_EVENT_NAME = "증정 이벤트";
-	
-	private Events events;
-	
-    public GiftEvent(Events events) {
-        this.events = events;
+
+    public GiftEvent() {
+        super(GIFT_EVENT_NAME, 0);
     }
-	
 
     @Override
-    public void applyEvent(Customer customer) {
+    public boolean isApplicable(Customer customer) {
         int price = customer.calculateTotalPrice();
-        if (price >= GIFT_NEED_PRICE) {
-            events.addEvent(this); 
-        }
+        return price >= GIFT_NEED_PRICE;
     }
 
     @Override
-    public String getEventName() {
-        return GIFT_EVENT_NAME;
+    public int calculateDiscountAmount(Customer customer) {
+        return GIFT_DISCOUNT_PRICE;
     }
-
-	@Override
-	public int getDiscountAmount(Customer customer) {
-		return GIFT_DISCOUNT_PRICE;
-	}
 }
