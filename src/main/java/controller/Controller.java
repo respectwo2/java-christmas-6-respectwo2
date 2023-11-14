@@ -24,7 +24,7 @@ public class Controller {
         OutputView.printEvents(customer.getEvents());
         OutputView.printTotalEventPrice(customer);
         OutputView.printAfterDiscountPrice(customer);
-
+        OutputView.printEventBadge(customer);
 	}
 
 
