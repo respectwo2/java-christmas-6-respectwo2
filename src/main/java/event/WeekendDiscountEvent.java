@@ -19,13 +19,22 @@ public class WeekendDiscountEvent extends DiscountEvent {
 
     @Override
     public boolean isApplicable(Customer customer) {
-        int visitDate = customer.getVisitDate();
-        LocalDate localDate = LocalDate.of(2023, 12, visitDate); 
+        LocalDate localDate = LocalDate.of(2023, 12, customer.getVisitDate());
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
-
-        return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
+        DiscountWeekEvent discountEvent = DiscountWeekEvent.getDiscountEvent(customer);
+        
+        for (MenuItem menuItem : customer.getMenuItems()) {
+            String menuType = MenuConst.valueOf(menuItem.getMenu()).getType();
+            if ((dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY) &&
+                menuType.equals(discountEvent.getMenuType())) {
+                return true; 
+            }
+        }
+        return false; 
     }
-
+    
+    
+    
     @Override
     public int calculateDiscountAmount(Customer customer) {
         int discountAmount = 0;
