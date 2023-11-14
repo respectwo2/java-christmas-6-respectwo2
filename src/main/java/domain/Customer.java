@@ -6,13 +6,12 @@ public class Customer {
 
 	private int visitDate;
 	private List<MenuItem> menuItems;
-	private Events events;
+	private List<DiscountEvent> events;
 
-	public Customer(int date, List<MenuItem> menus, Events events) {
+	public Customer(int date, List<MenuItem> menus, List<DiscountEvent> events) {
 		this.visitDate = date;
 		this.menuItems = menus;
 		this.events = events;
-
 	}
 
 	public Customer() {
@@ -25,11 +24,10 @@ public class Customer {
 	public int getVisitDate() {
 		return visitDate;
 	}
-	
-    public Events getEvents() {
-        return events;
-    }
 
+	public List<DiscountEvent> getEvents() {
+		return events;
+	}
 
 	public int calculateTotalPrice() {
 		int total = 0;
