@@ -17,11 +17,13 @@ public class Controller {
 
 	public static void play() {
 		Customer customer = generateCustomer();
+		OutputView.printNotice(customer);
 		OutputView.printMenu(customer);
 		OutputView.printBeforeDiscountPrice(customer);
-//	    OutputView.printEvents(customer);
+		OutputView.printGiftMenu(customer);
         OutputView.printEvents(customer.getEvents());
         OutputView.printTotalEventPrice(customer);
+        OutputView.printAfterDiscountPrice(customer);
 
 	}
 
