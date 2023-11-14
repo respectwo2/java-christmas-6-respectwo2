@@ -23,6 +23,11 @@ public class OutputView {
 		System.out.printf(ERROR_MESSAGE_TEXT, errorMessage);
 	}
 
+	public static void printHello() {
+		System.out.println("안녕하세요! 우테코 식당 " + MONTH_TEXT + " 이벤트 플래너입니다.");
+		
+	}
+	
 	public static void printVisitDateInputText() {
 		System.out.println(MONTH_TEXT + " " + INPUTDATE_TEXT);
 	}
@@ -115,8 +120,5 @@ public class OutputView {
 		return null;
 	}
 
-	public static void printHello() {
-		System.out.println("안녕하세요! 우테코 식당 " + MONTH_TEXT + " 이벤트 플래너입니다.");
-		
-	}
+
 }
