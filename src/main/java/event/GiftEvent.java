@@ -2,13 +2,14 @@ package event;
 
 import domain.Customer;
 import domain.DiscountEvent;
+import domain.MenuConst;
 
 public class GiftEvent extends DiscountEvent {
 
     private static final String GIFT_EVENT_NAME = "증정 이벤트";
     private static final int GIFT_NEED_PRICE = 120000;
-    private static final int GIFT_DISCOUNT_PRICE = 25000;
-
+    private static final MenuConst GIFT_TARGET = MenuConst.샴페인;
+    private static final int GIFT_TARGET_NUMBER = 1;
     public GiftEvent() {
         super(GIFT_EVENT_NAME, 0);
     }
@@ -21,6 +22,12 @@ public class GiftEvent extends DiscountEvent {
 
     @Override
     public int calculateDiscountAmount(Customer customer) {
-        return GIFT_DISCOUNT_PRICE;
+        int targetPrice = GIFT_TARGET.getPrice();
+        return targetPrice;
     }
+    
+    public String getGiftTarget() {
+        return GIFT_TARGET.getName() + " " + GIFT_TARGET_NUMBER ;
+    }
+    
 }
