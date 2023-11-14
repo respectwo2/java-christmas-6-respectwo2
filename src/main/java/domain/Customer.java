@@ -32,7 +32,7 @@ public class Customer {
 	public int calculateTotalPrice() {
 		int total = 0;
 		for (MenuItem menuItem : menuItems) {
-			total += MenuConst.valueOf(menuItem.getMenu()).getPrice() * menuItem.getQuantity();
+			total += MenuItemsList.valueOf(menuItem.getMenu()).getPrice() * menuItem.getQuantity();
 		}
 		return total;
 	}

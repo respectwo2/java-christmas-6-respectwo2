@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import domain.Customer;
 import domain.DiscountEvent;
 import domain.DiscountWeekEvent;
-import domain.MenuConst;
+import domain.MenuItemsList;
 import domain.MenuItem;
 
 public class WeekendDiscountEvent extends DiscountEvent {
@@ -24,7 +24,7 @@ public class WeekendDiscountEvent extends DiscountEvent {
         DiscountWeekEvent discountEvent = DiscountWeekEvent.getDiscountEvent(customer);
         
         for (MenuItem menuItem : customer.getMenuItems()) {
-            String menuType = MenuConst.valueOf(menuItem.getMenu()).getType();
+            String menuType = MenuItemsList.valueOf(menuItem.getMenu()).getType();
             if ((dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY) &&
                 menuType.equals(discountEvent.getMenuType())) {
                 return true; 
@@ -41,7 +41,7 @@ public class WeekendDiscountEvent extends DiscountEvent {
         DiscountWeekEvent discountEvent = DiscountWeekEvent.getDiscountEvent(customer);
 
         for (MenuItem menuItem : customer.getMenuItems()) {
-            String menuType = MenuConst.valueOf(menuItem.getMenu()).getType();
+            String menuType = MenuItemsList.valueOf(menuItem.getMenu()).getType();
             if (menuType.equals(discountEvent.getMenuType())) {
                 discountAmount += menuItem.getQuantity() * discountEvent.getDiscountAmount();
             }

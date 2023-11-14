@@ -1,6 +1,6 @@
 package domain;
 
-public enum MenuConst {
+public enum MenuItemsList {
 	
     양송이수프("애피타이저", 6000),
     타파스("애피타이저", 5500),
@@ -18,7 +18,7 @@ public enum MenuConst {
     private String type;
     private int price;
 
-    MenuConst(String type, int price) {
+    MenuItemsList(String type, int price) {
         this.type = type;
         this.price = price;
     }

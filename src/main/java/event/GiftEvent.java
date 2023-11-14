@@ -2,13 +2,13 @@ package event;
 
 import domain.Customer;
 import domain.DiscountEvent;
-import domain.MenuConst;
+import domain.MenuItemsList;
 
 public class GiftEvent extends DiscountEvent {
 
     private static final String GIFT_EVENT_NAME = "증정 이벤트";
     private static final int GIFT_NEED_PRICE = 120000;
-    private static final MenuConst GIFT_TARGET = MenuConst.샴페인;
+    private static final MenuItemsList GIFT_TARGET = MenuItemsList.샴페인;
     private static final int GIFT_TARGET_NUMBER = 1;
     public GiftEvent() {
         super(GIFT_EVENT_NAME, 0);

@@ -16,6 +16,8 @@ import event.WeekendDiscountEvent;
 public class Controller {
 
 	public static void play() {
+
+		OutputView.printHello();
 		Customer customer = generateCustomer();
 		OutputView.printNotice(customer);
 		OutputView.printMenu(customer);
