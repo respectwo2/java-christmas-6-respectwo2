@@ -15,6 +15,8 @@ import event.WeekdayDiscountEvent;
 import event.WeekendDiscountEvent;
 public class Controller {
 
+	private static final int MIN_EVENT_PRICE = 10000;
+
 	public static void play() {
 
 		OutputView.printHello();
@@ -56,7 +58,7 @@ public class Controller {
     }
 
     private static void applyEventIfApplicable(DiscountEvent event, Customer customer, List<DiscountEvent> events) {
-        if (event.isApplicable(customer)) {
+        if (event.isApplicable(customer) && customer.calculateTotalPrice() > MIN_EVENT_PRICE) {
         	event.calculateAndSetDiscountAmount(customer);
             events.add(event);
         }
