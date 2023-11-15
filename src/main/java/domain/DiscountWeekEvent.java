@@ -15,6 +15,9 @@ public enum DiscountWeekEvent {
 	private final String eventName;
 	private final String menuType;
 	private final int discountAmount;
+	
+	private static final int YEAR = 2023;
+	private static final int MONTH = 12;
 
 	DiscountWeekEvent(String eventName, String menuType, int discountAmount) {
 		this.eventName = eventName;
@@ -36,7 +39,7 @@ public enum DiscountWeekEvent {
 
 	public static DiscountWeekEvent getDiscountEvent(Customer customer) {
 		int visitDate = customer.getVisitDate();
-		LocalDate localDate = LocalDate.of(2023, 12, visitDate);
+		LocalDate localDate = LocalDate.of(YEAR, MONTH, visitDate);
 		DayOfWeek dayOfWeek = localDate.getDayOfWeek();
 		return DiscountWeekEvent.valueOf(dayOfWeek.name());
 	}

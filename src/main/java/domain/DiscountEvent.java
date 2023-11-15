@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class DiscountEvent {
 
 	private String eventName;
@@ -30,18 +28,6 @@ public class DiscountEvent {
 
 	public void calculateAndSetDiscountAmount(Customer customer) {
 		this.discountAmount = calculateDiscountAmount(customer);
-	}
-
-	public static int calculateTotalDiscount(Customer customer) {
-		int totalDiscount = 0;
-		List<DiscountEvent> events = customer.getEvents();
-
-		for (DiscountEvent event : events) {
-			event.calculateAndSetDiscountAmount(customer);
-			totalDiscount += event.getDiscountAmount();
-		}
-
-		return totalDiscount;
 	}
 
 }

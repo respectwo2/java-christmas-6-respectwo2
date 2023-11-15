@@ -7,13 +7,14 @@ import domain.Customer;
 import domain.DiscountEvent;
 import domain.MenuItem;
 import event.GiftEvent;
+import service.CustomerService;
+import service.DiscountEventService;
 
 public class OutputView {
 
 	private static final String ERROR_MESSAGE_TEXT = "[ERROR] %s\n";
 	private static final String MONTH_TEXT = "12월";
 	private static final String NONE_TEXT = "없음";
-
 	private static final String INPUTDATE_TEXT = "중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)";
 	private static final String INPUTMENU_TEXT = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)";
 	private static final String EVENT_NOTICE_MESSAGE = "%d일에 우테코에서 받을 이벤트 혜택 미리 보기!";
@@ -48,13 +49,12 @@ public class OutputView {
 
 	}
 
-	public static int printBeforeDiscountPrice(Customer customer) {
-		System.out.println("\n<할인 전 총주문 금액>");
-		int price = customer.calculateTotalPrice();
-		System.out.println(formatNumber(price) + "원");
-		return price;
-
+	public static void printBeforeDiscountPrice(Customer customer, CustomerService customerService) {
+	    System.out.println("\n<할인 전 총주문 금액>");
+	    int price = customerService.calculateTotalPrice(customer);
+	    System.out.println(formatNumber(price) + "원");
 	}
+
 
 	public static void printEvents(List<DiscountEvent> events) {
 		System.out.println("\n<혜택 내역>");
@@ -67,23 +67,17 @@ public class OutputView {
 		}
 	}
 
-	public static void printTotalEventPrice(Customer customer) {
-		int totalDiscount = DiscountEvent.calculateTotalDiscount(customer);
-		System.out.println("\n<총혜택 금액>");
-		System.out.println(formatNumber(-totalDiscount) + "원");
+	public static void printTotalEventPrice(Customer customer, DiscountEventService discountEventService) {
+	    int totalDiscount = discountEventService.calculateTotalDiscount(customer);
+	    System.out.println("\n<총혜택 금액>");
+	    System.out.println(formatNumber(-totalDiscount) + "원");
 	}
 
-	private static String formatNumber(int number) {
-		DecimalFormat df = new DecimalFormat("###,###");
-		return df.format(number);
-	}
 
-	public static void printAfterDiscountPrice(Customer customer) {
-		int price = customer.calculateTotalPrice();
-		int totalDiscount = DiscountEvent.calculateTotalDiscount(customer);
-
-		System.out.println("\n<할인 후 예상 결제 금액>");
-		System.out.println(formatNumber(price - totalDiscount) + "원");
+	public static void printAfterDiscountPrice(Customer customer, DiscountEventService discountEventService) {
+	    int afterDiscountPrice = discountEventService.calculateAfterDiscountTotalPrice(customer);
+	    System.out.println("\n<할인 후 예상 결제 금액>");
+	    System.out.println(formatNumber(afterDiscountPrice) + "원");
 	}
 
 	public static void printGiftMenu(Customer customer) {
@@ -99,23 +93,29 @@ public class OutputView {
 		System.out.println(NONE_TEXT);
 	}
 
-	public static void printEventBadge(Customer customer) {
-		System.out.println("\n<" + MONTH_TEXT + " 이벤트 배지>");
-		String badge = customer.getBadge();
-		if (badge == null) {
-			System.out.println(NONE_TEXT);
-			return;
-		}
-		System.out.println(badge);
-	}
+    public static void printEventBadge(Customer customer, DiscountEventService discountEventService) {
+        System.out.println("\n<" + MONTH_TEXT + " 이벤트 배지>");
+        String badge = discountEventService.getBadge(customer);
+        if (badge == null) {
+            System.out.println(NONE_TEXT);
+            return;
+        }
+        System.out.println(badge);
+    }
 
-	private static String getGiftTarget(List<DiscountEvent> events) {
+	private static String getGiftTarget(List<DiscountEvent> events) { //증정 아이템
 		for (DiscountEvent event : events) {
 			if (event instanceof GiftEvent) {
 				return ((GiftEvent) event).getGiftTarget();
 			}
 		}
 		return null;
+	}
+	
+
+	private static String formatNumber(int number) {
+		DecimalFormat df = new DecimalFormat("###,###");
+		return df.format(number);
 	}
 
 }

@@ -12,55 +12,42 @@ import event.ChristmasDdayDiscountEvent;
 import event.GiftEvent;
 import event.WeekdayDiscountEvent;
 import event.WeekendDiscountEvent;
+import service.CustomerService;
+import service.DiscountEventService;
+import service.EventApplyService;
 
 public class Controller {
+    private final CustomerService customerService;
+    private final DiscountEventService discountEventService;
+    private final EventApplyService eventApplyService;
 
-	private static final int MIN_EVENT_PRICE = 10000;
+    public Controller(CustomerService customerService, DiscountEventService discountEventService, EventApplyService eventApplyService) {
+        this.customerService = customerService;
+        this.discountEventService = discountEventService;
+        this.eventApplyService = eventApplyService;
+    }
+    
+    public void play() {
+        OutputView.printHello();
+        EventApplyService eventApplyService = new EventApplyService(customerService);
+        Customer customer = generateCustomer(eventApplyService);
+        OutputView.printNotice(customer);
+        OutputView.printMenu(customer);
+        OutputView.printBeforeDiscountPrice(customer, customerService);
+        OutputView.printGiftMenu(customer);
+        OutputView.printEvents(customer.getEvents());
+        OutputView.printTotalEventPrice(customer, discountEventService);
+        OutputView.printAfterDiscountPrice(customer, discountEventService);
+        OutputView.printEventBadge(customer, discountEventService);
+    }
 
-	public static void play() {
-
-		OutputView.printHello();
-		Customer customer = generateCustomer();
-		OutputView.printNotice(customer);
-		OutputView.printMenu(customer);
-		OutputView.printBeforeDiscountPrice(customer);
-		OutputView.printGiftMenu(customer);
-		OutputView.printEvents(customer.getEvents());
-		OutputView.printTotalEventPrice(customer);
-		OutputView.printAfterDiscountPrice(customer);
-		OutputView.printEventBadge(customer);
-	}
-
-	private static Customer generateCustomer() {
-
-		InputView input = new InputView();
-		int visitDate = input.readDate();
-		List<MenuItem> menus = input.readMenu();
-		Customer customer = new Customer(visitDate, menus, new ArrayList<>());
-		eventApply(customer);
-
-		return customer;
-	}
-
-	public static void eventApply(Customer customer) {
-		List<DiscountEvent> events = customer.getEvents();
-
-		DiscountEvent christmasEvent = new ChristmasDdayDiscountEvent();
-		DiscountEvent giftEvent = new GiftEvent();
-		DiscountEvent weekdayEvent = new WeekdayDiscountEvent();
-		DiscountEvent weekendEvent = new WeekendDiscountEvent();
-
-		applyEventIfApplicable(christmasEvent, customer, events);
-		applyEventIfApplicable(giftEvent, customer, events);
-		applyEventIfApplicable(weekdayEvent, customer, events);
-		applyEventIfApplicable(weekendEvent, customer, events);
-	}
-
-	private static void applyEventIfApplicable(DiscountEvent event, Customer customer, List<DiscountEvent> events) {
-		if (event.isApplicable(customer) && customer.calculateTotalPrice() > MIN_EVENT_PRICE) {
-			event.calculateAndSetDiscountAmount(customer);
-			events.add(event);
-		}
-	}
-
+    private Customer generateCustomer(EventApplyService eventApplyService) {
+        InputView input = new InputView();
+        int visitDate = input.readDate();
+        List<MenuItem> menus = input.readMenu();
+        Customer customer = new Customer(visitDate, menus, new ArrayList<>());
+        eventApplyService.eventApply(customer);
+        return customer;
+    }
 }
+
